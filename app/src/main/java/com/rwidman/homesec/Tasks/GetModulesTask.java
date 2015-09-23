@@ -45,7 +45,7 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("GET_MODULES");
+            bw.write("1#gateway#remote#GET_MODULES");
             bw.flush();
 
             Log.d("ModulesTask", "Written: GET_MODULES");

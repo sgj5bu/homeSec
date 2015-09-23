@@ -35,7 +35,7 @@ public class GetLogsTask extends AsyncTask<Void, Void, List<LogEntry>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("GET_LOG");
+            bw.write("1#gateway#remote#GET_LOG");
             bw.flush();
 
             String answer = br.readLine();

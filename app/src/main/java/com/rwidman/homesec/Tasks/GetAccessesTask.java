@@ -40,7 +40,7 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("GET_ACCESSES");
+            bw.write("1#gateway#remote#GET_ACCESSES");
             bw.flush();
             //get AccessesNames
             String answer = br.readLine();

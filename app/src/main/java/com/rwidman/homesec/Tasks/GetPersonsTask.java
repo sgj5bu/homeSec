@@ -29,7 +29,7 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("GET_PERSONS");
+            bw.write("1#gateway#remote#GET_PERSONS");
             bw.flush();
 
             String answer = br.readLine();
