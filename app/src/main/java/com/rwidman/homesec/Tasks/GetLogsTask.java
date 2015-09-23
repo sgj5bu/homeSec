@@ -1,24 +1,23 @@
 package com.rwidman.homesec.Tasks;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Library.Library;
+import com.rwidman.homesec.LoginActivity;
 import com.rwidman.homesec.Model.LogEntry;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -73,12 +72,10 @@ public class GetLogsTask extends AsyncTask<Void, Void, List<LogEntry>> {
             mAdapter.addAll(logsList);
             return logsList;
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mContext.startActivity(intent);
         }
         mAdapter.clear();
         return null;

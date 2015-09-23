@@ -1,11 +1,13 @@
 package com.rwidman.homesec.Tasks;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.rwidman.homesec.Fragments.PersonFragment;
 import com.rwidman.homesec.Library.Library;
+import com.rwidman.homesec.LoginActivity;
 import com.rwidman.homesec.Model.Person;
 
 import org.json.JSONArray;
@@ -65,7 +67,9 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
             return personsList;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mContext.startActivity(intent);
         }
 
         mAdapter.clear();

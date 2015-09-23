@@ -1,23 +1,22 @@
 package com.rwidman.homesec.Tasks;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.rwidman.homesec.Fragments.AccessFragment;
 import com.rwidman.homesec.Library.Library;
+import com.rwidman.homesec.LoginActivity;
 import com.rwidman.homesec.Model.Access;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +54,8 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
             String answer = br.readLine();
             String jsonString= answer.split("#")[2];
 
-            JSONArray accessNames = new JSONArray(jsonString);
+            JSONArray parameters = new JSONArray(jsonString);
+            JSONArray accessNames = parameters.getJSONArray(0);
             Log.d("ACCESSES TAKS", "received: " + jsonString);
             for(int i = 0; i < accessNames.length(); i++)
             {
@@ -85,12 +85,10 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
 
 
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            mContext.startActivity(intent);
         }
 
         mAdapter.clear();
