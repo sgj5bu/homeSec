@@ -5,6 +5,7 @@ import com.rwidman.homesec.Model.LogEntry;
 import com.rwidman.homesec.Model.Modul;
 import com.rwidman.homesec.Model.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,10 +15,10 @@ public class Cache {
 
     private static Cache cache;
 
-    private List<Modul> moduls;
-    private List<Person> persons;
-    private List<Access> accesses;
-    private List<LogEntry> logEntries;
+    private List<Modul> moduls = new ArrayList<>();
+    private List<Person> persons = new ArrayList<>();
+    private List<Access> accesses = new ArrayList<>();
+    private List<LogEntry> logEntries = new ArrayList<>();
 
 
     public List<Modul> getModuls() {

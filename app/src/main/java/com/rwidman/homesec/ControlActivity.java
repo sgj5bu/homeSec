@@ -1,22 +1,20 @@
 package com.rwidman.homesec;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.rwidman.homesec.Fragments.AccessFragment;
+import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
+import com.rwidman.homesec.Fragments.PersonFragment;
 
 import java.util.ArrayList;
 
 public class ControlActivity extends FragmentActivity {
-
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
-    private static final int NUM_PAGES = 5;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -41,13 +39,13 @@ public class ControlActivity extends FragmentActivity {
         Fragment modul= new ModulFragment();
         mPagerAdapter.addFragment(modul);
 
-        Fragment access= new ModulFragment();
+        Fragment access= new AccessFragment();
         mPagerAdapter.addFragment(access);
 
-        Fragment person= new ModulFragment();
+        Fragment person= new PersonFragment();
         mPagerAdapter.addFragment(person);
 
-        Fragment logEntry= new ModulFragment();
+        Fragment logEntry= new LogEntryFragment();
         mPagerAdapter.addFragment(logEntry);
 
         //set the adapter to the View pager
@@ -60,7 +58,9 @@ public class ControlActivity extends FragmentActivity {
      */
     private class ControlFragmentAdapter extends FragmentPagerAdapter {
 
+        final int PAGE_COUNT = 4;
         ArrayList<Fragment> fragments = new ArrayList<>();
+        private final String[] pageTitle = { "Module", "Access", "Person", "Logs" };
 
         public ControlFragmentAdapter(FragmentManager fm) {
             super(fm);
@@ -73,7 +73,12 @@ public class ControlActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return fragments.size();
+            return PAGE_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return pageTitle[position];
         }
 
         public void addFragment(Fragment frag) {

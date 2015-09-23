@@ -98,7 +98,6 @@ public class LoginActivity extends Activity {
             return;
         }
 
-
         // Reset errors.
         mUserNameView.setError(null);
         mPasswordView.setError(null);
@@ -166,18 +165,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-
-    protected void updateConnectButtonState() {
-        //TODO: Update this logic to also handle the user logged in by username.
-        //boolean connected = getPlusClient().isConnected();
-
-        //mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
-        //mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
-        //mUsernameLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
-    }
-
-
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -195,11 +182,6 @@ public class LoginActivity extends Activity {
 
         @Override
         protected Integer doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            // gensalt's log_rounds parameter determines the complexity
-            // the work factor is 2**log_rounds, and the default is 1
-
 
             try (
                 Socket socket = new Socket("10.8.0.1", 1213);
@@ -266,21 +248,21 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
 
-            if (success == 0) {
+            //if (success == 0) {
                 Log.d("Hash", "Logged in");
 
                 Intent intent = new Intent(context, ControlActivity.class);
                 intent.putExtra("Port", mPort);
                 startActivity(intent);
 
-            }
+            /*}
             else if (success == 1){
                 mUserNameView.setError(getString(R.string.error_incorrect_username));
                 mUserNameView.requestFocus();
             }else if (success == 2){
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
-            }
+            }*/
         }
 
         @Override
