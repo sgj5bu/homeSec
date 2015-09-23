@@ -176,6 +176,8 @@ public class LoginActivity extends Activity {
         //mUsernameLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
     }
 
+
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.

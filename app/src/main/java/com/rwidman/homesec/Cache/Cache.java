@@ -19,25 +19,39 @@ public class Cache {
     private List<Access> accesses;
     private List<LogEntry> logEntries;
 
+
     public List<Modul> getModuls() {
+        for (int i = 0;i<5;i++){
+            moduls.add(new Modul("Modul"+i,"anOderAus",i%2==0));
+        }
         return moduls;
     }
 
     public List<Person> getPersons() {
+        for (int i = 0;i<5;i++){
+            persons.add(new Person("Person"+i));
+        }
         return persons;
     }
 
     public List<Access> getAccesses() {
+        for (int i = 0;i<5;i++){
+            accesses.add(new Access("Access"+1,"offenOderZu"));
+        }
         return accesses;
     }
 
     public List<LogEntry> getLogEntries() {
+        for (int i = 0;i<5;i++){
+            logEntries.add(new LogEntry(i,"Modul"+i,"Topic"+i,"15.09.23_11-48-47_","Meldungstext"+i,"_ID"+i));
+        }
         return logEntries;
     }
 
     public static Cache getInstance()
     {
         if(cache == null)
+
         {
             cache = new Cache();
         }
