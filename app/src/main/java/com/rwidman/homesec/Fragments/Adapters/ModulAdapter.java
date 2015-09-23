@@ -54,7 +54,8 @@ public class ModulAdapter extends ArrayAdapter<Modul> {
             if (camera != null) {
                 if(m.hasCamera())
                 {
-                    //camera.setOnClickListener();
+                    camera.setTag(m);
+                    camera.setOnClickListener(new OnPhotoClickListener());
                 }
                 else
                 {
@@ -66,4 +67,11 @@ public class ModulAdapter extends ArrayAdapter<Modul> {
         return v;
     }
 
+    private class OnPhotoClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Modul m = (Modul) v.getTag();
+        }
+    }
 }

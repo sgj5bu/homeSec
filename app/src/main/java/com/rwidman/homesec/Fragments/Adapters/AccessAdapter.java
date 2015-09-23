@@ -52,18 +52,34 @@ public class AccessAdapter extends ArrayAdapter<Access> {
             if (state != null) {
                 state.setText(a.getState());
             }
-/*
+
             if (open != null) {
-                open.setOnClickListener();
+                open.setTag(a);
+                open.setOnClickListener(new OnOpenClickListener());
             }
 
             if (close != null) {
-                close.setOnClickListener();
+                close.setTag(a);
+                close.setOnClickListener(new OnCloseClickListener());
             }
-            */
         }
-
         return v;
     }
 
+    private class OnOpenClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Access a = (Access) v.getTag();
+        }
+    }
+
+
+    private class OnCloseClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Access a = (Access) v.getTag();
+        }
+    }
 }

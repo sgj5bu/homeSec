@@ -48,11 +48,19 @@ public class PersonAdapter extends ArrayAdapter<Person> {
             }
 
             if (reset != null) {
-                //reset.setOnClickListener();
+                reset.setTag(p);
+                reset.setOnClickListener(new OnResetClickListener());
             }
         }
 
         return v;
     }
 
+    private class OnResetClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Person p = (Person) v.getTag();
+        }
+    }
 }
