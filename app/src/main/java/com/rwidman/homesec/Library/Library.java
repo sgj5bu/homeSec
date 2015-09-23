@@ -7,18 +7,11 @@ import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Fragments.PersonFragment;
 import com.rwidman.homesec.Fragments.ProfileFragment;
-import com.rwidman.homesec.Model.Access;
-import com.rwidman.homesec.Model.LogEntry;
-import com.rwidman.homesec.Model.Person;
-import com.rwidman.homesec.Model.Profile;
 import com.rwidman.homesec.Tasks.GetAccessesTask;
 import com.rwidman.homesec.Tasks.GetLogsTask;
 import com.rwidman.homesec.Tasks.GetModulesTask;
 import com.rwidman.homesec.Tasks.GetPersonsTask;
 import com.rwidman.homesec.Tasks.GetProfilesTask;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Library {
@@ -26,18 +19,12 @@ public class Library {
     private static Library lib;
     private int Port;
 
-    private List<Person> persons = new ArrayList<>();
-    private List<Access> accesses = new ArrayList<>();
-    private List<LogEntry> logEntries = new ArrayList<>();
-    private List<Profile> profiles = new ArrayList<>();
-
-
     public static String makeOrder(String order){
         return "1#gateway#remote#"+order+"#[]";
     }
 
     public static String makeOrder(String order,String parameter){
-        return "1#gateway#remote#"+order+"#["+parameter+"]";
+        return "1#gateway#remote#"+order+"#['"+parameter+"']";
     }
 
     public void loadModuls(ModulFragment context) {

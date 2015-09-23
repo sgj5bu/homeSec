@@ -22,7 +22,7 @@ import java.util.List;
 
 public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
 
-    //private final List<String> accessesNameList = new ArrayList<>();
+    private final int TIMEOUT = 20*1000;
     private final List<Access> accessesNameStatusList = new ArrayList<>();
     private int mPort = -1;
     private AccessFragment mContext;
@@ -43,11 +43,17 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
     @Override
     protected List<Access> doInBackground(Void... params) {
 
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
+            socket.setSoTimeout(TIMEOUT);
             bw.write(Library.makeOrder("GET_ACCESSES"));
             bw.flush();
             //get AccessesNames
@@ -76,22 +82,31 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 String accName = nameStatus.getString(0);
                 Log.d("ACCESSES TASK","accName= " + accName);
                 String accStatus = nameStatus.getString(1);
-                Log.d("ACCESSES TASK","accStatus= " + accStatus + "now creating access.");
+                Log.d("ACCESSES TASK","accStatus= " + accStatus + "now creating access: " + accName);
                 accessesNameStatusList.add(new Access(accName, accStatus));
             }
 
-            mAdapter.addAll(accessesNameStatusList);
+            mContext.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.addAll(accessesNameStatusList);
+                }
+            });
             return accessesNameStatusList;
 
-
-
         } catch (Exception e) {
+            e.printStackTrace();
             Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(intent);
         }
 
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         return null;
     }
 

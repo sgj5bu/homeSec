@@ -22,6 +22,7 @@ import java.util.List;
 
 public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
 
+    private final int TIMEOUT = 20*1000;
     private final List<Person> personsList = new ArrayList<>();
     private int mPort = -1;
     private PersonFragment mContext;
@@ -43,12 +44,18 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
     protected List<Person> doInBackground(Void... params) {
 
 
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         Log.d("PersonTask", "Starting at Port: " + mPort);
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
+            socket.setSoTimeout(TIMEOUT);
             bw.write(Library.makeOrder("GET_PERSONS"));
             bw.flush();
 
@@ -63,16 +70,28 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
                 personsList.add(new Person(name));
             }
 
-            mAdapter.addAll(personsList);
+            mContext.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.addAll(personsList);
+                }
+            });
+
             return personsList;
 
         } catch (Exception e) {
+            e.printStackTrace();
             Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(intent);
         }
 
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         return null;
     }
 

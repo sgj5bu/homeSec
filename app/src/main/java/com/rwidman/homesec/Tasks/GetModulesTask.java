@@ -24,6 +24,7 @@ import java.util.List;
 
 public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
 
+    private final int TIMEOUT = 20*1000;
     private final List<Modul> modulesList = new ArrayList<>();
     private int mPort = -1;
     private ModulFragment mContext;
@@ -44,12 +45,18 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
     @Override
     protected List<Modul> doInBackground(Void... params) {
 
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         Log.d("ModulesTask", "Starting at Port: " + mPort);
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
+            socket.setSoTimeout(TIMEOUT);
             bw.write(Library.makeOrder("GET_MODULES"));
             bw.flush();
 
@@ -69,17 +76,28 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
                 Boolean hasCamera = modules.getJSONObject(module).getBoolean("hasCamera");
                 modulesList.add(new Modul(module,typ,status,hasCamera));
             }
-            mAdapter.addAll(modulesList);
+            mContext.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.addAll(modulesList);
+                }
+            });
 
             Log.d("ModulesTask", "list recieved");
             return modulesList;
 
         } catch (Exception e) {
+            e.printStackTrace();
             Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(intent);
         }
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         return modulesList;
     }
 

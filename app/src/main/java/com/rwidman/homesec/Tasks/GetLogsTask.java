@@ -24,6 +24,7 @@ import java.util.List;
 
 public class GetLogsTask extends AsyncTask<Void, Void, List<LogEntry>> {
 
+    private final int TIMEOUT = 20*1000;
     private final List<LogEntry> logsList = new ArrayList<>();
     private int mPort = -1;
     private LogEntryFragment mContext;
@@ -44,12 +45,18 @@ public class GetLogsTask extends AsyncTask<Void, Void, List<LogEntry>> {
     @Override
     protected List<LogEntry> doInBackground(Void... params) {
 
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         Log.d("LogEntryTask", "Starting at Port: " + mPort);
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
+            socket.setSoTimeout(TIMEOUT);
             bw.write(Library.makeOrder("GET_LOG"));
             bw.flush();
 
@@ -69,15 +76,26 @@ public class GetLogsTask extends AsyncTask<Void, Void, List<LogEntry>> {
 
                 logsList.add(new LogEntry(logID, modul, topic, time, text, eventID));
             }
-            mAdapter.addAll(logsList);
+            mContext.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.addAll(logsList);
+                }
+            });
             return logsList;
 
         } catch (Exception e) {
+            e.printStackTrace();
             Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(intent);
         }
-        mAdapter.clear();
+        mContext.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.clear();
+            }
+        });
         return null;
     }
 
