@@ -6,13 +6,15 @@ package com.rwidman.homesec.Model;
 public class Modul {
 
     private String name;
+    private String typ;
     private String state;
     private boolean camera;
 
-    public Modul(String name, String state, boolean camera)
+    public Modul(String name, String typ, String state, boolean camera)
     {
         this.name = name;
         this.state = state;
+        this.typ = typ;
         this.camera = camera;
     }
 
