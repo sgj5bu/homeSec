@@ -33,7 +33,7 @@ public class LogEntryAdapter extends ArrayAdapter<LogEntry> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.itemlistrow, null);
+            v = vi.inflate(R.layout.logentryitem, null);
         }
 
         LogEntry p = getItem(position);
@@ -48,7 +48,7 @@ public class LogEntryAdapter extends ArrayAdapter<LogEntry> {
             }
 
             if (tt2 != null) {
-                tt2.setText(p.getCategory().getId());
+                tt2.setText(p.getCategory());
             }
 
             if (tt3 != null) {

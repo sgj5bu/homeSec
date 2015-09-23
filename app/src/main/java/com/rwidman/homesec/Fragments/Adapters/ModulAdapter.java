@@ -33,26 +33,33 @@ public class ModulAdapter extends ArrayAdapter<Modul> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.itemlistrow, null);
+            v = vi.inflate(R.layout.modulitem, null);
         }
 
-        Modul p = getItem(position);
+        Modul m = getItem(position);
 
-        if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.id);
-            TextView tt2 = (TextView) v.findViewById(R.id.categoryId);
-            TextView tt3 = (TextView) v.findViewById(R.id.description);
+        if (m != null) {
+            TextView name = (TextView) v.findViewById(R.id.modul_name);
+            TextView state = (TextView) v.findViewById(R.id.modul_state);
+            TextView camera = (TextView) v.findViewById(R.id.modul_button_photo);
 
-            if (tt1 != null) {
-                tt1.setText(p.getId());
+            if (name != null) {
+                name.setText(m.getName());
             }
 
-            if (tt2 != null) {
-                tt2.setText(p.getCategory().getId());
+            if (state != null) {
+                state.setText(m.getState());
             }
 
-            if (tt3 != null) {
-                tt3.setText(p.getDescription());
+            if (camera != null) {
+                if(m.hasCamera())
+                {
+                    //camera.setOnClickListener();
+                }
+                else
+                {
+                   camera.setVisibility(View.GONE);
+                }
             }
         }
 

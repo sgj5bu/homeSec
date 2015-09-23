@@ -50,9 +50,9 @@ public class AccessAdapter extends ArrayAdapter<Access> {
             }
 
             if (state != null) {
-                state.setText(a.getState().getId());
+                state.setText(a.getState());
             }
-
+/*
             if (open != null) {
                 open.setOnClickListener();
             }
@@ -60,6 +60,7 @@ public class AccessAdapter extends ArrayAdapter<Access> {
             if (close != null) {
                 close.setOnClickListener();
             }
+            */
         }
 
         return v;

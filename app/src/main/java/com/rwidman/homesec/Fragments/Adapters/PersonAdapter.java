@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.rwidman.homesec.Model.Person;
@@ -33,26 +34,21 @@ public class PersonAdapter extends ArrayAdapter<Person> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.itemlistrow, null);
+            v = vi.inflate(R.layout.personitem, null);
         }
 
         Person p = getItem(position);
 
         if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.id);
-            TextView tt2 = (TextView) v.findViewById(R.id.categoryId);
-            TextView tt3 = (TextView) v.findViewById(R.id.description);
+            TextView name = (TextView) v.findViewById(R.id.person_name);
+            Button reset = (Button) v.findViewById(R.id.person_button_reset);
 
-            if (tt1 != null) {
-                tt1.setText(p.getId());
+            if (name != null) {
+                name.setText(p.getName());
             }
 
-            if (tt2 != null) {
-                tt2.setText(p.getCategory().getId());
-            }
-
-            if (tt3 != null) {
-                tt3.setText(p.getDescription());
+            if (reset != null) {
+                //reset.setOnClickListener();
             }
         }
 
