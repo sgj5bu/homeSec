@@ -15,24 +15,24 @@ public class Cache {
 
     private static Cache cache;
 
-    private static List<Modul> moduls = new ArrayList<>();
-    private static List<Person> persons = new ArrayList<>();
-    private static List<Access> accesses = new ArrayList<>();
-    private static List<LogEntry> logEntries = new ArrayList<>();
+    private List<Modul> moduls = new ArrayList<>();
+    private List<Person> persons = new ArrayList<>();
+    private List<Access> accesses = new ArrayList<>();
+    private List<LogEntry> logEntries = new ArrayList<>();
 
-    public static List<Modul> getModuls() {
+    public List<Modul> getModuls() {
         return moduls;
     }
 
-    public static List<Person> getPersons() {
+    public List<Person> getPersons() {
         return persons;
     }
 
-    public static List<Access> getAccesses() {
+    public List<Access> getAccesses() {
         return accesses;
     }
 
-    public static List<LogEntry> getLogEntries() {
+    public List<LogEntry> getLogEntries() {
         return logEntries;
     }
 

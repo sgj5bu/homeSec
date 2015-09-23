@@ -1,11 +1,13 @@
 package com.rwidman.homesec;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.rwidman.homesec.Fragments.ModulFragment;
 
 import java.util.ArrayList;
 
@@ -36,8 +38,17 @@ public class ControlActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ControlFragmentAdapter(getSupportFragmentManager());
 
-        Fragment contacts= new Fragment();
-        mPagerAdapter.addFragment(contacts);
+        Fragment modul= new ModulFragment();
+        mPagerAdapter.addFragment(modul);
+
+        Fragment access= new ModulFragment();
+        mPagerAdapter.addFragment(access);
+
+        Fragment person= new ModulFragment();
+        mPagerAdapter.addFragment(person);
+
+        Fragment logEntry= new ModulFragment();
+        mPagerAdapter.addFragment(logEntry);
 
         //set the adapter to the View pager
         mPager.setAdapter(mPagerAdapter);
