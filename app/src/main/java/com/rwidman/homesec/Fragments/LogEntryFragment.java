@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.Adapters.LogEntryAdapter;
-import com.rwidman.homesec.Fragments.Adapters.ModulAdapter;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.R;
 
 
@@ -50,10 +49,10 @@ public class LogEntryFragment extends ListFragment {
         mListView = view.findViewById(R.id.list);
         mProgressView = view.findViewById(R.id.control_progress);
 
-        setListAdapter(new ModulAdapter(getActivity(),
+        setListAdapter(new LogEntryAdapter(getActivity(),
                 R.layout.logentryitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Modules");
-        Cache.getInstance().getLogEntries(this);
+        Library.getInstance().loadLogEntries(this);
     }
 
     /**

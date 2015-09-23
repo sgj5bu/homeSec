@@ -42,6 +42,7 @@ public class LogEntryAdapter extends ArrayAdapter<LogEntry> {
         if (l != null) {
             TextView topic = (TextView) v.findViewById(R.id.logentry_topic);
             TextView modul = (TextView) v.findViewById(R.id.logentry_modul);
+            TextView time = (TextView) v.findViewById(R.id.logentry_time);
             Button photo = (Button) v.findViewById(R.id.logentry_button_photo);
             Button details = (Button) v.findViewById(R.id.logentry_button_details);
 
@@ -55,10 +56,22 @@ public class LogEntryAdapter extends ArrayAdapter<LogEntry> {
                 modul.setText(l.getModuleName());
             }
 
+            if(time != null)
+            {
+                time.setText(l.getTime());
+            }
+
             if(photo != null)
             {
-                photo.setTag(l);
-                photo.setOnClickListener(new OnPhotoClickListener());
+                if(l.getEventID().isEmpty())
+                {
+                    photo.setVisibility(View.GONE);
+                }
+                else {
+                    photo.setVisibility(View.VISIBLE);
+                    photo.setTag(l);
+                    photo.setOnClickListener(new OnPhotoClickListener());
+                }
             }
 
             if(details != null)

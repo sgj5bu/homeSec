@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.Adapters.ModulAdapter;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.R;
 
 public class ModulFragment extends ListFragment {
@@ -51,7 +51,7 @@ public class ModulFragment extends ListFragment {
         setListAdapter(new ModulAdapter(getActivity(),
                 R.layout.modulitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Modules");
-        Cache.getInstance().loadModuls(this);
+        Library.getInstance().loadModuls(this);
     }
 
     /**

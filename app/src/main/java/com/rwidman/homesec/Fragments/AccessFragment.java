@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.Adapters.AccessAdapter;
-import com.rwidman.homesec.Fragments.Adapters.ModulAdapter;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.R;
 
 
@@ -51,10 +50,10 @@ public class AccessFragment extends ListFragment {
         mListView = view.findViewById(R.id.list);
         mProgressView = view.findViewById(R.id.control_progress);
 
-        setListAdapter(new ModulAdapter(getActivity(),
+        setListAdapter(new AccessAdapter(getActivity(),
                 R.layout.accessitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Access");
-        Cache.getInstance().getAccesses(this);
+        Library.getInstance().loadAccesses(this);
     }
 
     /**

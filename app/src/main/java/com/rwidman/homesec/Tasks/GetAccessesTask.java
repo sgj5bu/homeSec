@@ -5,13 +5,15 @@ package com.rwidman.homesec.Tasks;
  */
 
 import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
 
-import com.rwidman.homesec.Cache.Cache;
+import com.rwidman.homesec.Fragments.ModulFragment;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.Model.Access;
+import com.rwidman.homesec.Model.Modul;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,7 +23,6 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
@@ -29,6 +30,8 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
     //private final List<String> accessesNameList = new ArrayList<>();
     private final List<Access> accessesNameStatusList = new ArrayList<>();
     private int mPort = -1;
+    private ModulFragment mContext;
+    private ArrayAdapter<Modul> mAdapter;
 
     public GetAccessesTask(int port) {
         mPort= port;
@@ -41,7 +44,7 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write(Cache.makeOrder("GET_ACCESSES"));
+            bw.write(Library.makeOrder("GET_ACCESSES"));
                     bw.flush();
             //get AccessesNames
             String answer = br.readLine();
@@ -53,7 +56,7 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 String name = accessNames.getString(i);
                 //accessesNameList.add(name);
                 //request state for each state
-                bw.write(Cache.makeOrder("GET_ACCESS_STATUS"));
+                bw.write(Library.makeOrder("GET_ACCESS_STATUS"));
                 bw.flush();
             }
             //read incoming access states

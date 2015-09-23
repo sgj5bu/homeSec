@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rwidman.homesec.Cache.Cache;
-import com.rwidman.homesec.Fragments.Adapters.ModulAdapter;
 import com.rwidman.homesec.Fragments.Adapters.PersonAdapter;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.R;
 
 public class PersonFragment extends ListFragment {
@@ -49,10 +48,10 @@ public class PersonFragment extends ListFragment {
         mListView = view.findViewById(R.id.list);
         mProgressView = view.findViewById(R.id.control_progress);
 
-        setListAdapter(new ModulAdapter(getActivity(),
+        setListAdapter(new PersonAdapter(getActivity(),
                 R.layout.personitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Modules");
-        Cache.getInstance().getPersons(this);
+        Library.getInstance().loadPersons(this);
     }
 
     /**

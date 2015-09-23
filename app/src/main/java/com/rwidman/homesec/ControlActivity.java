@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.AccessFragment;
 import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Fragments.PersonFragment;
 import com.rwidman.homesec.Fragments.ProfileFragment;
+import com.rwidman.homesec.Library.Library;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,7 @@ public class ControlActivity extends FragmentActivity {
      * and next wizard steps.
      */
     private ViewPager mPager;
+    private Library lib;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -36,7 +37,8 @@ public class ControlActivity extends FragmentActivity {
         setContentView(R.layout.activity_control);
 
         Intent i = getIntent();
-        Cache.getInstance().setPort(i.getIntExtra("Port", 0));
+        lib = Library.getInstance();
+        Library.getInstance().setPort(i.getIntExtra("Port", 0));
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);

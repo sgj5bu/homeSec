@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
-import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.ModulFragment;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.Model.Modul;
 
 import org.json.JSONArray;
@@ -37,16 +37,21 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
         }
 
     @Override
+    protected void onPreExecute()
+    {
+        mContext.showProgress(true);
+    }
+
+    @Override
     protected List<Modul> doInBackground(Void... params) {
 
-        mContext.showProgress(true);
         mAdapter.clear();
         Log.d("ModulesTask", "Starting at Port: " + mPort);
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write(Cache.makeOrder("GET_MODULES"));
+            bw.write(Library.makeOrder("GET_MODULES"));
             bw.flush();
 
             Log.d("ModulesTask", "Written: GET_MODULES");
@@ -54,15 +59,20 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
             String answer = br.readLine();
             String jsonString= answer.split("#")[2];
 
+
+            Log.d("ModulesTask", "recieved: " + jsonString);
             JSONObject modules = new JSONArray(jsonString).getJSONObject(0);
-            Iterator<String> modulesIterator = modules.keys();
-            for (String module = modulesIterator.next(); modulesIterator.hasNext(); module = modulesIterator.next()) {
+
+            for (Iterator<String> modulesIterator = modules.keys(); modulesIterator.hasNext();) {
+                String module = modulesIterator.next();
                 String typ = modules.getJSONObject(module).getString("Typ");
                 String status= modules.getJSONObject(module).getString("Status");
                 Boolean hasCamera = modules.getJSONObject(module).getBoolean("hasCamera");
                 modulesList.add(new Modul(module,typ,status,hasCamera));
             }
             mAdapter.addAll(modulesList);
+
+            Log.d("ModulesTask", "list recieved");
             return modulesList;
 
         } catch (UnknownHostException e) {
@@ -80,6 +90,7 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
     protected void onPostExecute(List<Modul> result) {
         super.onPostExecute(result);
         mAdapter.notifyDataSetChanged();
+        mContext.showProgress(false);
     }
 
     @Override
