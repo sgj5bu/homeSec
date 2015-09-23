@@ -8,7 +8,6 @@ import android.widget.ListView;
 
 import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.Adapters.ModulAdapter;
-import com.rwidman.homesec.Fragments.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -85,7 +84,7 @@ public class ModulFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(Cache.getInstance().getModuls().get(position).id);
+           // mListener.onFragmentInteraction(Cache.getInstance().getModuls().get(position).id);
         }
     }
 

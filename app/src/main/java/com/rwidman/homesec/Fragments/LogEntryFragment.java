@@ -1,10 +1,9 @@
 package com.rwidman.homesec.Fragments;
 
 import android.app.Activity;
-import android.support.v4.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.rwidman.homesec.Cache.Cache;
@@ -85,7 +84,7 @@ public class LogEntryFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(Cache.getInstance().getLogEntries().get(position).id);
+           // mListener.onFragmentInteraction(Cache.getInstance().getLogEntries().get(position).id);
         }
     }
 

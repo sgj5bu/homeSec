@@ -39,21 +39,10 @@ public class LogEntryAdapter extends ArrayAdapter<LogEntry> {
         LogEntry p = getItem(position);
 
         if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.id);
-            TextView tt2 = (TextView) v.findViewById(R.id.categoryId);
-            TextView tt3 = (TextView) v.findViewById(R.id.description);
+            TextView tt1 = (TextView) v.findViewById(R.id.logentry_topic);
+            TextView tt2 = (TextView) v.findViewById(R.id.logentry_modul);
+            TextView tt3 = (TextView) v.findViewById(R.id.logentry_button_photo);
 
-            if (tt1 != null) {
-                tt1.setText(p.getId());
-            }
-
-            if (tt2 != null) {
-                tt2.setText(p.getCategory());
-            }
-
-            if (tt3 != null) {
-                tt3.setText(p.getDescription());
-            }
         }
 
         return v;

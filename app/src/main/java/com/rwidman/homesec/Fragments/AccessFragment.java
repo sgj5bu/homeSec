@@ -85,7 +85,7 @@ public class AccessFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(Cache.getInstance().getAccesses().get(position).id);
+           // mListener.onFragmentInteraction(Cache.getInstance().getAccesses().get(position).id);
         }
     }
 
