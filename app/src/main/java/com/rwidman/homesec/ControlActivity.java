@@ -1,12 +1,15 @@
 package com.rwidman.homesec;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
+import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.AccessFragment;
 import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
@@ -22,6 +25,7 @@ public class ControlActivity extends FragmentActivity {
      * and next wizard steps.
      */
     private ViewPager mPager;
+    private View mProgressView;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -33,23 +37,27 @@ public class ControlActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
 
+        Intent i = getIntent();
+        Cache.Port = i.getIntExtra("Port", 0);
+
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
+        mProgressView = findViewById(R.id.control_progress);
         mPagerAdapter = new ControlFragmentAdapter(getSupportFragmentManager());
 
-        Fragment modul= new ModulFragment();
+        Fragment modul= ModulFragment.newInstance();
         mPagerAdapter.addFragment(modul);
 
-        Fragment access= new AccessFragment();
+        Fragment access= AccessFragment.newInstance();
         mPagerAdapter.addFragment(access);
 
-        Fragment person= new PersonFragment();
+        Fragment person= PersonFragment.newInstance();
         mPagerAdapter.addFragment(person);
 
-        Fragment profile= new ProfileFragment();
+        Fragment profile= ProfileFragment.newInstance();
         mPagerAdapter.addFragment(profile);
 
-        Fragment logEntry= new LogEntryFragment();
+        Fragment logEntry= LogEntryFragment.newInstance();
         mPagerAdapter.addFragment(logEntry);
 
         //set the adapter to the View pager

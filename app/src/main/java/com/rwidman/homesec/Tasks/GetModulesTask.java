@@ -1,7 +1,10 @@
 package com.rwidman.homesec.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Model.Modul;
 
 import org.json.JSONArray;
@@ -21,22 +24,31 @@ import java.util.List;
 
 public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
 
-private final List<Modul> modulesList = new ArrayList<>();
-private int mPort = -1;
+    private final List<Modul> modulesList = new ArrayList<>();
+    private int mPort = -1;
+    private ModulFragment mContext;
+    private ArrayAdapter<Modul> mAdapter;
 
-        public GetModulesTask(int port) {
+    public GetModulesTask(ModulFragment context, int port) {
             mPort= port;
+        mContext = context;
+        mAdapter = ((ArrayAdapter<Modul>) mContext.getListAdapter());
         }
 
     @Override
     protected List<Modul> doInBackground(Void... params) {
 
+        mContext.showProgress(true);
+        mAdapter.clear();
+        Log.d("ModulesTask", "Starting at Port: " + mPort);
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
             bw.write("GET_MODULES");
             bw.flush();
+
+            Log.d("ModulesTask", "Written: GET_MODULES");
 
             String answer = br.readLine();
             String jsonString= answer.split("#")[2];
@@ -49,6 +61,7 @@ private int mPort = -1;
                 Boolean hasCamera = modules.getJSONObject(module).getBoolean("hasCamera");
                 modulesList.add(new Modul(module,typ,status,hasCamera));
             }
+            mAdapter.addAll(modulesList);
             return modulesList;
 
         } catch (UnknownHostException e) {
@@ -58,7 +71,18 @@ private int mPort = -1;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mAdapter.addAll(modulesList);
+        return modulesList;
+    }
 
-        return null;
+    @Override
+    protected void onPostExecute(List<Modul> result) {
+        super.onPostExecute(result);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onCancelled() {
+        mContext.showProgress(false);
     }
 }

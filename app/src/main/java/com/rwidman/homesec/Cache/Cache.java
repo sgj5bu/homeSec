@@ -1,10 +1,14 @@
 package com.rwidman.homesec.Cache;
 
+import android.util.Log;
+
+import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Model.Access;
 import com.rwidman.homesec.Model.LogEntry;
 import com.rwidman.homesec.Model.Modul;
 import com.rwidman.homesec.Model.Person;
 import com.rwidman.homesec.Model.Profile;
+import com.rwidman.homesec.Tasks.GetModulesTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
 public class Cache {
 
     private static Cache cache;
+    public static int Port;
 
     private List<Modul> moduls = new ArrayList<>();
     private List<Person> persons = new ArrayList<>();
@@ -23,9 +28,15 @@ public class Cache {
     private List<Profile> profiles = new ArrayList<>();
 
 
-    public List<Modul> getModuls() {
-        for (int i = 0;i<5;i++){
-            moduls.add(new Modul("Modul"+i,"anOderAus",i%2==0));
+    public List<Modul> getModuls(ModulFragment context) {
+        Log.d("Cache", "Try starting modulestask");
+        GetModulesTask t = new GetModulesTask(context, Port);
+        try
+        {
+            moduls = t.execute().get();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
         return moduls;
     }
