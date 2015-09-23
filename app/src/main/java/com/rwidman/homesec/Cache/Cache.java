@@ -52,13 +52,13 @@ public class Cache {
     }
 
     public List<Profile> getProfiles() {
+        for (int i = 0;i<5;i++){
+            profiles.add(new Profile("Profile"+i,i==2?true:false));
+        }
         return profiles;
     }
 
     public void setProfiles(List<Profile> profiles) {
-        for (int i = 0;i<5;i++){
-            profiles.add(new Profile("Profile"+i,i==2?true:false));
-        }
         this.profiles = profiles;
     }
 
