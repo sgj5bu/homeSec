@@ -21,7 +21,7 @@ import java.util.List;
 public class Cache {
 
     private static Cache cache;
-    public static int Port;
+    private int Port;
 
     private List<Modul> moduls = new ArrayList<>();
     private List<Person> persons = new ArrayList<>();
@@ -36,49 +36,52 @@ public class Cache {
 
     public void loadModuls(ModulFragment context) {
         Log.d("Cache", "Try starting modulestask");
-        GetModulesTask t = new GetModulesTask(context, Port);
+        GetModulesTask t = new GetModulesTask(context, getPort());
         t.execute();
     }
 
-    public List<Person> getPersons(PersonFragment context) {
+    public List<Person> loadPersons(PersonFragment context) {
         for (int i = 0;i<5;i++){
             persons.add(new Person("Person"+i));
         }
         return persons;
     }
 
-    public List<Access> getAccesses(AccessFragment context) {
+    public List<Access> loadAccesses(AccessFragment context) {
         for (int i = 0;i<5;i++){
             accesses.add(new Access("Access"+1,"offenOderZu"));
         }
         return accesses;
     }
 
-    public List<LogEntry> getLogEntries(LogEntryFragment context) {
+    public List<LogEntry> loadLogEntries(LogEntryFragment context) {
         for (int i = 0;i<5;i++){
             logEntries.add(new LogEntry(Integer.toString(i),"Modul"+i,"Topic"+i,"15.09.23_11-48-47_","Meldungstext"+i,"_ID"+i));
         }
         return logEntries;
     }
 
-    public List<Profile> getProfiles(ProfileFragment context) {
+    public List<Profile> loadProfiles(ProfileFragment context) {
         for (int i = 0;i<5;i++){
             profiles.add(new Profile("Profile"+i,i==2));
         }
         return profiles;
     }
 
-    public void setProfiles(List<Profile> profiles) {
-        this.profiles = profiles;
-    }
-
     public static Cache getInstance()
     {
         if(cache == null)
-
         {
             cache = new Cache();
         }
         return cache;
+    }
+
+    public int getPort() {
+        return Port;
+    }
+
+    public void setPort(int port) {
+        Port = port;
     }
 }

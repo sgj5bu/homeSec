@@ -36,7 +36,7 @@ public class ControlActivity extends FragmentActivity {
         setContentView(R.layout.activity_control);
 
         Intent i = getIntent();
-        Cache.Port = i.getIntExtra("Port", 0);
+        Cache.getInstance().setPort(i.getIntExtra("Port", 0));
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);

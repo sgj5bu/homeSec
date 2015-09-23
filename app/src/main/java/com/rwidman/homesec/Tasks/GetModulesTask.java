@@ -32,8 +32,8 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
 
     public GetModulesTask(ModulFragment context, int port) {
             mPort= port;
-        mContext = context;
-        mAdapter = ((ArrayAdapter<Modul>) mContext.getListAdapter());
+            mContext = context;
+            mAdapter = ((ArrayAdapter<Modul>) mContext.getListAdapter());
         }
 
     @Override
@@ -72,7 +72,7 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mAdapter.addAll(modulesList);
+        mAdapter.clear();
         return modulesList;
     }
 
