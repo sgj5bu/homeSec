@@ -11,6 +11,7 @@ import com.rwidman.homesec.Fragments.AccessFragment;
 import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Fragments.PersonFragment;
+import com.rwidman.homesec.Fragments.ProfileFragment;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,9 @@ public class ControlActivity extends FragmentActivity {
         Fragment person= new PersonFragment();
         mPagerAdapter.addFragment(person);
 
+        Fragment profile= new ProfileFragment();
+        mPagerAdapter.addFragment(profile);
+
         Fragment logEntry= new LogEntryFragment();
         mPagerAdapter.addFragment(logEntry);
 
@@ -58,9 +62,9 @@ public class ControlActivity extends FragmentActivity {
      */
     private class ControlFragmentAdapter extends FragmentPagerAdapter {
 
-        final int PAGE_COUNT = 4;
+        final int PAGE_COUNT = 5;
         ArrayList<Fragment> fragments = new ArrayList<>();
-        private final String[] pageTitle = { "Module", "Access", "Person", "Logs" };
+        private final String[] pageTitle = { "Module", "Access", "Person", "Profiles", "Logs" };
 
         public ControlFragmentAdapter(FragmentManager fm) {
             super(fm);

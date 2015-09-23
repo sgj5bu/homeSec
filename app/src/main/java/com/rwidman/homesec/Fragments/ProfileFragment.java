@@ -54,6 +54,6 @@ public class ProfileFragment extends ListFragment {
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState)
     {
-        setEmptyText("No Access");
+        setEmptyText("No Profiles");
     }
 }
