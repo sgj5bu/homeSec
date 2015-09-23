@@ -2,7 +2,9 @@ package com.rwidman.homesec.Tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import com.rwidman.homesec.Fragments.AccessFragment;
 import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.Model.Access;
 
@@ -24,14 +26,25 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
     //private final List<String> accessesNameList = new ArrayList<>();
     private final List<Access> accessesNameStatusList = new ArrayList<>();
     private int mPort = -1;
+    private AccessFragment mContext;
+    private ArrayAdapter<Access> mAdapter;
 
-    public GetAccessesTask(int port) {
+    public GetAccessesTask(AccessFragment context, int port) {
         mPort= port;
+        mContext = context;
+        mAdapter = ((ArrayAdapter<Access>) mContext.getListAdapter());
+    }
+
+    @Override
+    protected void onPreExecute()
+    {
+        mContext.showProgress(true);
     }
 
     @Override
     protected List<Access> doInBackground(Void... params) {
 
+        mAdapter.clear();
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -43,6 +56,7 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
             String jsonString= answer.split("#")[2];
 
             JSONArray accessNames = new JSONArray(jsonString);
+            Log.d("ACCESSES TAKS", "received: " + jsonString);
             for(int i = 0; i < accessNames.length(); i++)
             {
                 String name = accessNames.getString(i);
@@ -65,6 +79,8 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 Log.d("ACCESSES TASK","accStatus= " + accStatus + "now creating access.");
                 accessesNameStatusList.add(new Access(accName, accStatus));
             }
+
+            mAdapter.addAll(accessesNameStatusList);
             return accessesNameStatusList;
 
 
@@ -77,6 +93,19 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
             e.printStackTrace();
         }
 
+        mAdapter.clear();
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(List<Access> result) {
+        super.onPostExecute(result);
+        mAdapter.notifyDataSetChanged();
+        mContext.showProgress(false);
+    }
+
+    @Override
+    protected void onCancelled() {
+        mContext.showProgress(false);
     }
 }

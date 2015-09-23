@@ -11,6 +11,7 @@ import com.rwidman.homesec.Model.Access;
 import com.rwidman.homesec.Model.LogEntry;
 import com.rwidman.homesec.Model.Person;
 import com.rwidman.homesec.Model.Profile;
+import com.rwidman.homesec.Tasks.GetAccessesTask;
 import com.rwidman.homesec.Tasks.GetLogsTask;
 import com.rwidman.homesec.Tasks.GetModulesTask;
 import com.rwidman.homesec.Tasks.GetPersonsTask;
@@ -51,11 +52,10 @@ public class Library {
         t.execute();
     }
 
-    public List<Access> loadAccesses(AccessFragment context) {
-        for (int i = 0;i<5;i++){
-            accesses.add(new Access("Access"+1,"offenOderZu"));
-        }
-        return accesses;
+    public void loadAccesses(AccessFragment context) {
+        Log.d("Load", "Try starting accesstask");
+        GetAccessesTask t = new GetAccessesTask(context, getPort());
+        t.execute();
     }
 
     public void loadLogEntries(LogEntryFragment context) {
