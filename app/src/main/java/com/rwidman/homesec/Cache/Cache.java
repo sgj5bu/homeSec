@@ -2,7 +2,11 @@ package com.rwidman.homesec.Cache;
 
 import android.util.Log;
 
+import com.rwidman.homesec.Fragments.AccessFragment;
+import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
+import com.rwidman.homesec.Fragments.PersonFragment;
+import com.rwidman.homesec.Fragments.ProfileFragment;
 import com.rwidman.homesec.Model.Access;
 import com.rwidman.homesec.Model.LogEntry;
 import com.rwidman.homesec.Model.Modul;
@@ -39,28 +43,28 @@ public class Cache {
         return moduls;
     }
 
-    public List<Person> getPersons() {
+    public List<Person> getPersons(PersonFragment context) {
         for (int i = 0;i<5;i++){
             persons.add(new Person("Person"+i));
         }
         return persons;
     }
 
-    public List<Access> getAccesses() {
+    public List<Access> getAccesses(AccessFragment context) {
         for (int i = 0;i<5;i++){
             accesses.add(new Access("Access"+1,"offenOderZu"));
         }
         return accesses;
     }
 
-    public List<LogEntry> getLogEntries() {
+    public List<LogEntry> getLogEntries(LogEntryFragment context) {
         for (int i = 0;i<5;i++){
             logEntries.add(new LogEntry(Integer.toString(i),"Modul"+i,"Topic"+i,"15.09.23_11-48-47_","Meldungstext"+i,"_ID"+i));
         }
         return logEntries;
     }
 
-    public List<Profile> getProfiles() {
+    public List<Profile> getProfiles(ProfileFragment context) {
         for (int i = 0;i<5;i++){
             profiles.add(new Profile("Profile"+i,i==2));
         }

@@ -59,7 +59,6 @@ public class LoginActivity extends Activity {
 
         context = this.getApplicationContext();
 
-
         // Set up the login form.
         mUserNameView = (AutoCompleteTextView) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
