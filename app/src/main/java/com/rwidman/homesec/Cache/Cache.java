@@ -34,7 +34,6 @@ public class Cache {
         return "1#gateway#remote#"+order+"#[]";
     }
 
-    public List<Modul> getModuls(ModulFragment context) {
     public void loadModuls(ModulFragment context) {
         Log.d("Cache", "Try starting modulestask");
         GetModulesTask t = new GetModulesTask(context, Port);
