@@ -2,6 +2,7 @@ package com.rwidman.homesec.Tasks;
 
 import android.os.AsyncTask;
 
+import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Model.Person;
 import org.json.JSONArray;
 
@@ -29,7 +30,7 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("1#gateway#remote#GET_PERSONS");
+            bw.write(Cache.makeOrder("GET_PERSONS"));
             bw.flush();
 
             String answer = br.readLine();

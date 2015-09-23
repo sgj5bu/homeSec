@@ -6,6 +6,7 @@ package com.rwidman.homesec.Tasks;
 
 import android.os.AsyncTask;
 
+import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Model.Access;
 
 import org.json.JSONArray;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
 
-    private final List<String> accessesNameList = new ArrayList<>();
+    //private final List<String> accessesNameList = new ArrayList<>();
     private final List<Access> accessesNameStatusList = new ArrayList<>();
     private int mPort = -1;
 
@@ -40,8 +41,8 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("1#gateway#remote#GET_ACCESSES");
-            bw.flush();
+            bw.write(Cache.makeOrder("GET_ACCESSES"));
+                    bw.flush();
             //get AccessesNames
             String answer = br.readLine();
             String jsonString= answer.split("#")[2];
@@ -50,9 +51,9 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
             for(int i = 0; i < accessNames.length(); i++)
             {
                 String name = accessNames.getString(i);
-                accessesNameList.add(name);
+                //accessesNameList.add(name);
                 //request state for each state
-                bw.write("GET_ACCESS_STATUS");
+                bw.write(Cache.makeOrder("GET_ACCESS_STATUS"));
                 bw.flush();
             }
             //read incoming access states

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Model.Modul;
 
@@ -45,7 +46,7 @@ public class GetModulesTask extends AsyncTask<Void, Void, List<Modul>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("1#gateway#remote#GET_MODULES");
+            bw.write(Cache.makeOrder("GET_MODULES"));
             bw.flush();
 
             Log.d("ModulesTask", "Written: GET_MODULES");

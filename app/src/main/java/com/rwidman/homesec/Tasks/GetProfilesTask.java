@@ -2,6 +2,7 @@ package com.rwidman.homesec.Tasks;
 
 import android.os.AsyncTask;
 
+import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Model.Modul;
 import com.rwidman.homesec.Model.Profile;
 
@@ -36,7 +37,7 @@ public class GetProfilesTask extends AsyncTask<Void, Void, List<Profile>> {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
-            bw.write("1#gateway#remote#GET_PROFILES");
+            bw.write(Cache.makeOrder("GET_PROFILES"));
             bw.flush();
 
             String answer = br.readLine();

@@ -30,6 +30,10 @@ public class Cache {
     private List<Profile> profiles = new ArrayList<>();
 
 
+    public static String makeOrder(String order){
+        return "1#gateway#remote#"+order+"#[]";
+    }
+
     public List<Modul> getModuls(ModulFragment context) {
         Log.d("Cache", "Try starting modulestask");
         GetModulesTask t = new GetModulesTask(context, Port);
