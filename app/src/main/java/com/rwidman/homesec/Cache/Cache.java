@@ -4,6 +4,7 @@ import com.rwidman.homesec.Model.Access;
 import com.rwidman.homesec.Model.LogEntry;
 import com.rwidman.homesec.Model.Modul;
 import com.rwidman.homesec.Model.Person;
+import com.rwidman.homesec.Model.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Cache {
     private List<Person> persons = new ArrayList<>();
     private List<Access> accesses = new ArrayList<>();
     private List<LogEntry> logEntries = new ArrayList<>();
+    private List<Profile> profiles = new ArrayList<>();
 
 
     public List<Modul> getModuls() {
@@ -47,6 +49,14 @@ public class Cache {
             logEntries.add(new LogEntry(i,"Modul"+i,"Topic"+i,"15.09.23_11-48-47_","Meldungstext"+i,"_ID"+i));
         }
         return logEntries;
+    }
+
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
 
     public static Cache getInstance()

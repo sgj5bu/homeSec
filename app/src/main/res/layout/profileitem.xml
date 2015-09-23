@@ -8,14 +8,14 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_weight="0.5"
+        android:layout_weight="0.7"
         android:layout_width="0dp"
         android:layout_height="match_parent">
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Extra Long Name"
-            android:id="@+id/access_name"
+            android:id="@+id/profile_name"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
 
@@ -23,32 +23,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Open"
-            android:id="@+id/access_state"
+            android:id="@+id/profile_state"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_weight="0.5"
+        android:layout_weight="0.3"
         android:layout_width="0dp"
         android:layout_height="match_parent">
 
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Open"
-            android:id="@+id/access_button_open"
+            android:id="@+id/profile_button_activate"
             android:layout_gravity="right" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:text="Close"
-            android:id="@+id/access_button_close"
-            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 </LinearLayout>
