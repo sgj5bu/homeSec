@@ -23,7 +23,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:id="@+id/logentry_topic"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
         </HorizontalScrollView>
 
 

@@ -71,7 +71,7 @@ public class ControlActivity extends FragmentActivity {
 
         final int PAGE_COUNT = 5;
         ArrayList<Fragment> fragments = new ArrayList<>();
-        private final String[] pageTitle = { "Module", "Access", "Person", "Profiles", "Logs" };
+        private final String[] pageTitle = { "Modules", "Accesses", "Persons", "Profiles", "Logs" };
 
         public ControlFragmentAdapter(FragmentManager fm) {
             super(fm);
