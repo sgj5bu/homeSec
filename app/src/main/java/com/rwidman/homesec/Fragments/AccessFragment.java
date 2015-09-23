@@ -50,7 +50,7 @@ public class AccessFragment extends ListFragment {
         mListView = view.findViewById(R.id.list);
         mProgressView = view.findViewById(R.id.control_progress);
 
-        setListAdapter(new AccessAdapter(getActivity(),
+        setListAdapter(new AccessAdapter(this,
                 R.layout.accessitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Access");
         Library.getInstance().loadAccesses(this);

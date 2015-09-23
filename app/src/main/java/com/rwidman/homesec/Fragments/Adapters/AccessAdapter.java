@@ -1,6 +1,5 @@
 package com.rwidman.homesec.Fragments.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.rwidman.homesec.Fragments.AccessFragment;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.Model.Access;
 import com.rwidman.homesec.R;
 
@@ -18,12 +19,16 @@ import java.util.List;
  */
 public class AccessAdapter extends ArrayAdapter<Access> {
 
-    public AccessAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
+    private AccessFragment mContext;
+
+    public AccessAdapter(AccessFragment context, int textViewResourceId) {
+        super(context.getActivity(), textViewResourceId);
+        mContext = context;
     }
 
-    public AccessAdapter(Context context, int resource, List<Access> items) {
-        super(context, resource, items);
+    public AccessAdapter(AccessFragment context, int resource, List<Access> items) {
+        super(context.getActivity(), resource, items);
+        mContext = context;
     }
 
     @Override
@@ -55,31 +60,30 @@ public class AccessAdapter extends ArrayAdapter<Access> {
 
             if (open != null) {
                 open.setTag(a);
-                open.setOnClickListener(new OnOpenClickListener());
+                open.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Access a = (Access) v.getTag();
+                        Library.getInstance().openAccess(mContext, a);
+                    }
+                });
             }
 
             if (close != null) {
                 close.setTag(a);
-                close.setOnClickListener(new OnCloseClickListener());
+                close.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Access a = (Access) v.getTag();
+                        Library.getInstance().closeAccess(mContext, a);
+                    }
+                });
             }
         }
         return v;
     }
 
-    private class OnOpenClickListener implements View.OnClickListener {
 
-        @Override
-        public void onClick(View v) {
-            Access a = (Access) v.getTag();
-        }
-    }
-
-
-    private class OnCloseClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Access a = (Access) v.getTag();
-        }
-    }
 }

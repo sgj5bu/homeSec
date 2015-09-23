@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.rwidman.homesec.Model.Access;
 import com.rwidman.homesec.Model.Profile;
 import com.rwidman.homesec.R;
 
@@ -60,8 +59,9 @@ public class ProfileAdapter extends ArrayAdapter<Profile> {
                 }
                 else
                 {
+                    activate.setVisibility(View.VISIBLE);
                     activate.setTag(p);
-                    activate.setOnClickListener(new OnOpenClickListener());
+                    activate.setOnClickListener(new OnActivateClickListener());
                 }
             }
 
@@ -69,7 +69,7 @@ public class ProfileAdapter extends ArrayAdapter<Profile> {
         return v;
     }
 
-    private class OnOpenClickListener implements View.OnClickListener {
+    private class OnActivateClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -77,12 +77,4 @@ public class ProfileAdapter extends ArrayAdapter<Profile> {
         }
     }
 
-
-    private class OnCloseClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Access a = (Access) v.getTag();
-        }
-    }
 }

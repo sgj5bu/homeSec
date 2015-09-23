@@ -77,12 +77,13 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 String statusAnswer = br.readLine();
                 Log.d("ACCESSES TASK","receiving= " + statusAnswer);
                 //msgID#ACCESS_STATUS#[AccName,Status]
-                JSONArray nameStatus = new JSONArray(statusAnswer.split("#")[2]);
+                JSONArray parameter = new JSONArray(statusAnswer.split("#")[2]);
+                JSONArray nameStatus = parameter.getJSONArray(0);
                 Log.d("ACCESSES TASK","name-status= " + nameStatus);
                 String accName = nameStatus.getString(0);
                 Log.d("ACCESSES TASK","accName= " + accName);
                 String accStatus = nameStatus.getString(1);
-                Log.d("ACCESSES TASK","accStatus= " + accStatus + "now creating access: " + accName);
+                Log.d("ACCESSES TASK","accStatus= " + accStatus + " now creating access: " + accName);
                 accessesNameStatusList.add(new Access(accName, accStatus));
             }
 

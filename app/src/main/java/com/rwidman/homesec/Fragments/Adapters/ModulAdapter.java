@@ -54,6 +54,7 @@ public class ModulAdapter extends ArrayAdapter<Modul> {
             if (camera != null) {
                 if(m.hasCamera())
                 {
+                    camera.setVisibility(View.VISIBLE);
                     camera.setTag(m);
                     camera.setOnClickListener(new OnPhotoClickListener());
                 }

@@ -7,11 +7,14 @@ import com.rwidman.homesec.Fragments.LogEntryFragment;
 import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Fragments.PersonFragment;
 import com.rwidman.homesec.Fragments.ProfileFragment;
+import com.rwidman.homesec.Model.Access;
+import com.rwidman.homesec.Tasks.CloseAccessTask;
 import com.rwidman.homesec.Tasks.GetAccessesTask;
 import com.rwidman.homesec.Tasks.GetLogsTask;
 import com.rwidman.homesec.Tasks.GetModulesTask;
 import com.rwidman.homesec.Tasks.GetPersonsTask;
 import com.rwidman.homesec.Tasks.GetProfilesTask;
+import com.rwidman.homesec.Tasks.OpenAccessTask;
 
 
 public class Library {
@@ -55,6 +58,18 @@ public class Library {
         Log.d("Load", "Try starting profiletask");
         GetProfilesTask t = new GetProfilesTask(context, getPort());
         t.execute();
+    }
+
+    public void openAccess(AccessFragment context, Access a) {
+        Log.d("Open", "Try starting openaccesstask");
+        OpenAccessTask t = new OpenAccessTask(context, getPort());
+        t.execute(a);
+    }
+
+    public void closeAccess(AccessFragment context, Access a) {
+        Log.d("Open", "Try starting openaccesstask");
+        CloseAccessTask t = new CloseAccessTask(context, getPort());
+        t.execute(a);
     }
 
     public static Library getInstance()
