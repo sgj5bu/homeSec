@@ -1,16 +1,10 @@
 package com.rwidman.homesec.Tasks;
 
-/**
- * Created by xxxx on 23.09.2015.
- */
-
 import android.os.AsyncTask;
-import android.widget.ArrayAdapter;
+import android.util.Log;
 
-import com.rwidman.homesec.Fragments.ModulFragment;
 import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.Model.Access;
-import com.rwidman.homesec.Model.Modul;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +24,6 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
     //private final List<String> accessesNameList = new ArrayList<>();
     private final List<Access> accessesNameStatusList = new ArrayList<>();
     private int mPort = -1;
-    private ModulFragment mContext;
-    private ArrayAdapter<Modul> mAdapter;
 
     public GetAccessesTask(int port) {
         mPort= port;
@@ -45,7 +37,7 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
             bw.write(Library.makeOrder("GET_ACCESSES"));
-                    bw.flush();
+            bw.flush();
             //get AccessesNames
             String answer = br.readLine();
             String jsonString= answer.split("#")[2];
@@ -56,17 +48,22 @@ public class GetAccessesTask extends AsyncTask<Void, Void, List<Access>> {
                 String name = accessNames.getString(i);
                 //accessesNameList.add(name);
                 //request state for each state
-                bw.write(Library.makeOrder("GET_ACCESS_STATUS"));
+                Log.d("ACCESSES TASK","requesting= " + name);
+                bw.write(Library.makeOrder("GET_ACCESS_STATUS",name));
                 bw.flush();
             }
             //read incoming access states
             for (int i = 0; i < accessNames.length();i++){
                 String statusAnswer = br.readLine();
+                Log.d("ACCESSES TASK","receiving= " + statusAnswer);
                 //msgID#ACCESS_STATUS#[AccName,Status]
                 JSONArray nameStatus = new JSONArray(statusAnswer.split("#")[2]);
+                Log.d("ACCESSES TASK","name-status= " + nameStatus);
                 String accName = nameStatus.getString(0);
+                Log.d("ACCESSES TASK","accName= " + accName);
                 String accStatus = nameStatus.getString(1);
-                accessesNameStatusList.add(new Access(accName,accStatus));
+                Log.d("ACCESSES TASK","accStatus= " + accStatus + "now creating access.");
+                accessesNameStatusList.add(new Access(accName, accStatus));
             }
             return accessesNameStatusList;
 

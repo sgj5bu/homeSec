@@ -35,6 +35,10 @@ public class Library {
         return "1#gateway#remote#"+order+"#[]";
     }
 
+    public static String makeOrder(String order,String parameter){
+        return "1#gateway#remote#"+order+"#["+parameter+"]";
+    }
+
     public void loadModuls(ModulFragment context) {
         Log.d("Cache", "Try starting modulestask");
         GetModulesTask t = new GetModulesTask(context, getPort());
