@@ -9,9 +9,7 @@ import com.rwidman.homesec.Model.Profile;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by J.Ringler on 15.09.2015.
- */
+
 public class Cache {
 
     private static Cache cache;

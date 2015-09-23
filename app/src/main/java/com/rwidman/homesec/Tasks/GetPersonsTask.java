@@ -2,29 +2,20 @@ package com.rwidman.homesec.Tasks;
 
 import android.os.AsyncTask;
 
-import com.rwidman.homesec.Model.Modul;
-
+import com.rwidman.homesec.Model.Person;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by xxxx on 23.09.2015.
- */
-public class GetPersonsTask extends AsyncTask<Void, Void, List<Modul>> {
+public class GetPersonsTask extends AsyncTask<Void, Void, List<Person>> {
 
-    private final List<Modul> personsList = new ArrayList<>();
+    private final List<Person> personsList = new ArrayList<>();
     private int mPort = -1;
 
     public GetPersonsTask (int port) {
@@ -32,7 +23,7 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Modul>> {
     }
 
     @Override
-    protected List<Modul> doInBackground(Void... params) {
+    protected List<Person> doInBackground(Void... params) {
 
         try (   Socket socket = new Socket("10.8.0.1", mPort);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -48,6 +39,7 @@ public class GetPersonsTask extends AsyncTask<Void, Void, List<Modul>> {
             for(int i = 0; i < names.length(); i++)
             {
                 String name = names.getString(i);
+                personsList.add(new Person(name));
             }
 
             return personsList;

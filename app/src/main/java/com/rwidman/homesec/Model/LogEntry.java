@@ -3,14 +3,14 @@ package com.rwidman.homesec.Model;
 
 public class LogEntry {
 
-    private int id;
+    private String id;
     private String moduleName;
     private String topic;
     private String time;
     private String text;
     private String eventID;
 
-    public LogEntry(int id,String moduleName,String topic, String time, String text, String eventID){
+    public LogEntry(String id,String moduleName,String topic, String time, String text, String eventID){
         this.setId(id);
         this.setModuleName(moduleName);
         this.setTopic(topic);
@@ -19,11 +19,11 @@ public class LogEntry {
         this.setEventID(eventID);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
