@@ -51,7 +51,7 @@ public class ModulFragment extends ListFragment {
         setListAdapter(new ModulAdapter(getActivity(),
                 R.layout.modulitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Modules");
-        Cache.getInstance().getModuls(this);
+        Cache.getInstance().loadModuls(this);
     }
 
     /**

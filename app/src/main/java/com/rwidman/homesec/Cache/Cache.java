@@ -35,16 +35,10 @@ public class Cache {
     }
 
     public List<Modul> getModuls(ModulFragment context) {
+    public void loadModuls(ModulFragment context) {
         Log.d("Cache", "Try starting modulestask");
         GetModulesTask t = new GetModulesTask(context, Port);
-        try
-        {
-            moduls = t.execute().get();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return moduls;
+        t.execute();
     }
 
     public List<Person> getPersons(PersonFragment context) {

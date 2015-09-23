@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.rwidman.homesec.Cache.Cache;
 import com.rwidman.homesec.Fragments.AccessFragment;
@@ -25,7 +24,6 @@ public class ControlActivity extends FragmentActivity {
      * and next wizard steps.
      */
     private ViewPager mPager;
-    private View mProgressView;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -42,7 +40,6 @@ public class ControlActivity extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-        mProgressView = findViewById(R.id.control_progress);
         mPagerAdapter = new ControlFragmentAdapter(getSupportFragmentManager());
 
         Fragment modul= ModulFragment.newInstance();

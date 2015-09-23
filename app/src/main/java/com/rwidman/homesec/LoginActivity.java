@@ -247,21 +247,21 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
 
-            //if (success == 0) {
+            if (success == 0) {
                 Log.d("Hash", "Logged in");
 
                 Intent intent = new Intent(context, ControlActivity.class);
                 intent.putExtra("Port", mPort);
                 startActivity(intent);
 
-            /*}
+            }
             else if (success == 1){
                 mUserNameView.setError(getString(R.string.error_incorrect_username));
                 mUserNameView.requestFocus();
             }else if (success == 2){
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
-            }*/
+            }
         }
 
         @Override
