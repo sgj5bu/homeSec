@@ -55,14 +55,14 @@ public class Cache {
 
     public List<LogEntry> getLogEntries() {
         for (int i = 0;i<5;i++){
-            logEntries.add(new LogEntry(i,"Modul"+i,"Topic"+i,"15.09.23_11-48-47_","Meldungstext"+i,"_ID"+i));
+            logEntries.add(new LogEntry(Integer.toString(i),"Modul"+i,"Topic"+i,"15.09.23_11-48-47_","Meldungstext"+i,"_ID"+i));
         }
         return logEntries;
     }
 
     public List<Profile> getProfiles() {
         for (int i = 0;i<5;i++){
-            profiles.add(new Profile("Profile"+i,i==2?true:false));
+            profiles.add(new Profile("Profile"+i,i==2));
         }
         return profiles;
     }
