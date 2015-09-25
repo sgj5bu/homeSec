@@ -2,11 +2,15 @@ package com.rwidman.homesec.Tasks;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.rwidman.homesec.Fragments.AccessFragment;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.LoginActivity;
 import com.rwidman.homesec.Model.Access;
+
+import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -45,9 +49,33 @@ public class OpenAccessTask extends AsyncTask<Access, Void, Void> {
             Thread.sleep(DELAY);
             socket.setSoTimeout(TIMEOUT);
 
-            //TODO: send open access order and set state of a
+            bw.write(Library.makeOrder("SET_ACCESS_OPEN", a.getName()));
+            bw.flush();
 
-            a.setState("OPEN");
+            String statusAnswer = br.readLine();
+            Log.d("ACCESSES TASK", "receiving= " + statusAnswer);
+            //msgID#ACCESS_STATUS#[AccName,Status]
+            String order =  statusAnswer.split("#")[1];
+            String accStatus = order;
+            if (!order.equals("NOT_ALLOWED")){
+                JSONArray parameter = new JSONArray(statusAnswer.split("#")[2]);
+                JSONArray nameStatus = parameter.getJSONArray(0);
+                Log.d("ACCESSES TASK", "name-status= " + nameStatus);
+                String accName = nameStatus.getString(0);
+                Log.d("ACCESSES TASK", "accName= " + accName);
+                accStatus = nameStatus.getString(1);
+            }
+
+            //TODO: send open access order and set state of a
+            if (accStatus.equals("-43")) {
+                accStatus = "already open";
+            } else if (accStatus.equals("-41")){
+                accStatus = "open not supported.";
+            } else if (accStatus.equals("0")){
+                accStatus = "open successful";
+            }
+            a.setState(accStatus);
+
         } catch (Exception e) {
             e.printStackTrace();
             Intent intent = new Intent(mContext.getActivity(), LoginActivity.class);

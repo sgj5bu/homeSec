@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.rwidman.homesec.Fragments.ModulFragment;
+import com.rwidman.homesec.Library.Library;
 import com.rwidman.homesec.Model.Modul;
 import com.rwidman.homesec.R;
 
@@ -17,12 +19,16 @@ import java.util.List;
  */
 public class ModulAdapter extends ArrayAdapter<Modul> {
 
-    public ModulAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
+    private ModulFragment mContext;
+
+    public ModulAdapter(ModulFragment context, int textViewResourceId) {
+        super(context.getActivity(), textViewResourceId);
+        mContext = context;
     }
 
-    public ModulAdapter(Context context, int resource, List<Modul> items) {
-        super(context, resource, items);
+    public ModulAdapter(ModulFragment context, int resource, List<Modul> items) {
+        super(context.getActivity(), resource, items);
+        mContext = context;
     }
 
     @Override
@@ -56,7 +62,16 @@ public class ModulAdapter extends ArrayAdapter<Modul> {
                 {
                     camera.setVisibility(View.VISIBLE);
                     camera.setTag(m);
-                    camera.setOnClickListener(new OnPhotoClickListener());
+                    camera.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Modul m = (Modul) v.getTag();
+                            if (m.getState().equals("true")){
+                                Library.getInstance().takePhoto(mContext,m);
+                            }
+                        }
+                    });
                 }
                 else
                 {
@@ -68,11 +83,4 @@ public class ModulAdapter extends ArrayAdapter<Modul> {
         return v;
     }
 
-    private class OnPhotoClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Modul m = (Modul) v.getTag();
-        }
-    }
 }

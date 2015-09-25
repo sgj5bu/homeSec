@@ -48,7 +48,7 @@ public class ModulFragment extends ListFragment {
         mListView = view.findViewById(R.id.list);
         mProgressView = view.findViewById(R.id.control_progress);
 
-        setListAdapter(new ModulAdapter(getActivity(),
+        setListAdapter(new ModulAdapter(this,
                 R.layout.modulitem));
         ((TextView)this.getListView().getEmptyView()).setText("No Modules");
         Library.getInstance().loadModuls(this);
